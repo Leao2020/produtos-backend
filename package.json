@@ -11,7 +11,7 @@
   "devDependencies": {
     "nodemon": "^2.0.2"
   },
-  "repository": "https://github.com/Leao2020/produtos-backend.git",
+  "repository": "https://github.com/Leao2020/Exercicio.git",
   "author": "Leao2020 <ricardobleao@hotmail.com>",
   "license": "MIT"
 }
