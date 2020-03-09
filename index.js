@@ -1,24 +1,48 @@
-const express = require('express');
+const express = require('express')
 
-const server = express();
+const server = express()
+server.use(express.json())
 
-var produtos = [
-    {id: 1, nome: 'Computador', preco: 1200.20},
-    {id: 2, nome: 'Mouse', preco: 20.50},
-    {id: 3, nome: 'Teclado', preco: 220.50},
-];
+var tarefa = [{
+    id: 1,
+    descricao: "Comprar pão",
+    finalizado: false 
+}]
 
-server.get('/produto', function(request, response) {
-    return response.json(produtos);
-    });
+server.post('/tarefa', function(request, response) {
+    const obj = request.body
+    tarefa.push(obj)
+    return response.status(201).send()
+})
 
-    server.get('/produto/:id', function(request, response) {
-   
-        const id = request.params.id;
+server.get('/tarefa', function(request, response) {
+    return response.json(tarefa)
+})
 
-        const produto = produtos.filter(p => p.id == id);
+server.get('/tarefa/:id', function(request, response){
+    const id = request.params.id
+    const produto = tarefa.filter(p => p.id == id)
+    return response.json(produto)
+})
 
-        return response.json(produto);
-    });
+ server.delete('/tarefa/:id', function(request, response){
+     const id = request.params.id 
+     tarefa = tarefa.filter(e => e.id != id)
+     return response.status(200).send()
+ })
 
-server.listen(3000);
+ server.put('/tarefa/:id', function(request, response) {
+     const id = request.params.id
+     const obj = request.body
+
+     tarefa.forEach(e => {
+         if(e.id == id) {
+             e.descricao = obj.descricao
+             e.finalizado = obj.finalizado
+             return
+         }
+
+        return response.send()
+     })
+ })
+server.listen(3000)
